@@ -1,0 +1,786 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>大一学生工作自评与匹配问卷（含霍兰德 · MBTI · 未来方向）</title>
+<style>
+:root{
+  --M:#4834D4; --C:#E17055; --S:#00A3A3; --A:#0984E3; --E:#D63031; --V:#7F8FA6;
+  --bg:#f5f6f8; --card:#fff; --line:#e6e8ec; --line2:#f0f1f4;
+  --tx:#1f2430; --tx2:#5a6472; --tx3:#8b95a3;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei",sans-serif;
+  background:var(--bg);color:var(--tx);font-size:14px;line-height:1.7}
+.wrap{max-width:960px;margin:0 auto;padding:24px 20px 60px}
+
+header{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:20px 24px;margin-bottom:16px}
+header h1{font-size:20px;font-weight:700}
+header .sub{color:var(--tx2);font-size:13px;margin-top:8px}
+.tags{display:flex;flex-wrap:wrap;gap:7px;margin-top:12px}
+.tag{font-size:11.5px;padding:3px 10px;border-radius:20px;background:#eef1f6;color:var(--tx2)}
+.tag.w{background:#fff2e0;color:#a35a00}
+.tag.r{background:#ffeeee;color:#c0392b}
+
+.sec{background:var(--card);border:1px solid var(--line);border-radius:12px;
+  padding:18px 24px;margin-bottom:12px}
+.sec > h2{font-size:15px;margin-bottom:4px;display:flex;align-items:center;gap:9px}
+.sec > h2 .no{width:21px;height:21px;border-radius:6px;background:var(--tx);color:#fff;
+  font-size:11.5px;display:flex;align-items:center;justify-content:center;flex:0 0 auto}
+.sec > .desc{font-size:12.5px;color:var(--tx3);margin-bottom:14px;padding-left:30px}
+
+.field{margin-bottom:16px}
+.field:last-child{margin-bottom:2px}
+.flab{font-size:13px;font-weight:600;margin-bottom:8px;display:flex;align-items:center;gap:8px}
+.flab .req{font-size:11px;padding:1px 7px;border-radius:4px;background:#eef1f6;color:var(--tx3);font-weight:500}
+.flab .req.must{background:#ffeeee;color:#c0392b}
+.chips{display:flex;flex-wrap:wrap;gap:7px}
+.incoin{display:block;width:100%;max-width:420px;padding:10px 13px;border:1px solid var(--line);
+  border-radius:8px;font-size:14px;font-family:inherit;color:var(--tx);background:#fff;outline:none;transition:.13s}
+.infoin:focus{border-color:var(--tx);box-shadow:0 0 0 3px rgba(90,80,120,.08)}
+.chip{border:1px solid var(--line);border-radius:8px;padding:7px 13px;cursor:pointer;
+  font-size:12.5px;color:var(--tx2);background:#fff;transition:.13s;user-select:none}
+.chip:hover{border-color:#c3cad6;background:#fafbfc}
+.chip.on{border-color:var(--tx);background:var(--tx);color:#fff;font-weight:600}
+.chip small{opacity:.66;margin-left:4px;font-size:11px}
+
+.grp{display:flex;flex-wrap:wrap;gap:22px}
+.gcol .gt{font-size:11.5px;color:var(--tx3);margin-bottom:6px;font-weight:700}
+.gpair{display:flex;gap:6px}
+
+.qc{border-top:1px solid var(--line2);padding:14px 0 2px}
+.qc:first-of-type{border-top:none;padding-top:4px}
+.qhead{display:flex;align-items:baseline;gap:10px;margin-bottom:10px}
+.qno{font-size:12.5px;font-weight:800;color:var(--tx3);letter-spacing:.5px}
+.qtitle{font-size:14px;font-weight:600;flex:1}
+.qflag{font-size:11px;padding:2px 8px;border-radius:5px;background:#fff0e8;color:#c0392b;font-weight:700}
+.opts{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+@media(max-width:700px){.opts{grid-template-columns:1fr}}
+.opt{border:1px solid var(--line);border-radius:9px;padding:9px 13px;cursor:pointer;
+  font-size:12.5px;color:var(--tx2);display:flex;gap:9px;align-items:flex-start;
+  transition:.13s;background:#fff;user-select:none}
+.opt:hover{border-color:#c3cad6;background:#fafbfc}
+.opt.on{border-color:var(--tx);background:#f2f4f8;color:var(--tx);font-weight:600}
+.opt .k{width:18px;height:18px;border-radius:5px;background:#eef1f6;color:var(--tx2);
+  display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;flex:0 0 auto;margin-top:2px}
+.opt.on .k{background:var(--tx);color:#fff}
+
+.res{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:20px 24px;margin-top:16px}
+.res h2{font-size:16px;margin-bottom:4px}
+.res .hint{font-size:12px;color:var(--tx3);margin-bottom:16px}
+.bar{display:flex;align-items:center;gap:10px;margin-bottom:7px}
+.bar .nm{width:78px;font-size:12.5px;font-weight:600;flex:0 0 auto}
+.bar .track{flex:1;height:15px;background:#f0f1f4;border-radius:8px;overflow:hidden}
+.bar .fill{height:100%;border-radius:8px;transition:width .35s cubic-bezier(.4,0,.2,1)}
+.bar .pc{width:46px;text-align:right;font-size:12px;color:var(--tx2);flex:0 0 auto}
+
+.subttl{font-size:12px;color:var(--tx3);font-weight:700;letter-spacing:.5px;margin:20px 0 9px;
+  padding-top:16px;border-top:1px solid var(--line2)}
+
+table.brk{width:100%;border-collapse:collapse;font-size:12px}
+table.brk th{background:#f3f5f8;padding:7px 8px;text-align:center;font-weight:700;
+  color:var(--tx2);font-size:11.5px;border-bottom:1px solid var(--line)}
+table.brk th:first-child{text-align:left}
+table.brk td{padding:7px 8px;text-align:center;border-bottom:1px solid var(--line2);color:var(--tx2)}
+table.brk td:first-child{text-align:left;font-weight:600}
+table.brk td.tot{font-weight:800;color:var(--tx);font-size:13px}
+table.brk tr:last-child td{border-bottom:none}
+.brknote{margin-top:8px;padding:8px 10px;background:#fafbfc;border-left:3px solid var(--line);
+  font-size:11.5px;line-height:1.7;color:var(--tx3)}
+
+.picks{margin-top:6px}
+.pick{display:flex;gap:14px;padding:11px 0;border-bottom:1px solid #f2f3f6}
+.pick:last-child{border-bottom:none}
+.pick .lbl{width:120px;font-size:12.5px;color:var(--tx3);font-weight:700;flex:0 0 auto;padding-top:1px}
+.pick .val{font-size:14px;font-weight:600;flex:1}
+.pick .val small{display:block;font-size:12px;color:var(--tx2);font-weight:400;margin-top:3px}
+
+.tipbox{margin-top:12px;padding:13px 16px;border-radius:9px;font-size:13px;line-height:1.75}
+.tipbox.time{background:#fff8e8;color:#8a6d00}
+.tipbox.path{background:#eef4ff;color:#1a4fa0}
+.tipbox.hol{background:#f6f2ff;color:#5a3fa8}
+.tipbox.mb{background:#eefaf7;color:#0d6b5c}
+.tipbox.warn{background:#fff0e8;color:#a0402a}
+.tipbox b{font-weight:700}
+.holnow{margin:-4px 0 16px;padding:13px 16px;border-radius:9px;font-size:13px;line-height:1.75;
+  background:#f6f2ff;color:#5a3fa8;border:1px solid #e2d8f8}
+.holnow b{font-weight:700}
+.holnow .code{font-size:15px;font-weight:800;margin-right:6px}
+.holnow .desc{color:#6f5fb8}
+.holnow .cmb{margin-top:7px;padding-top:7px;border-top:1px dashed #d6c9f0;color:#4a3a8a}
+.holnow.empty{background:#f7f8fa;color:#98a1af;border-color:#e8ebf0;font-size:12.5px}
+
+details{background:var(--card);border:1px solid var(--line);border-radius:12px;
+  padding:0;margin-top:12px;overflow:hidden}
+details summary{padding:15px 24px;cursor:pointer;font-size:14px;font-weight:600;
+  list-style:none;display:flex;align-items:center;gap:9px}
+details summary::-webkit-details-marker{display:none}
+details summary::before{content:'▸';color:var(--tx3);transition:.15s;display:inline-block}
+details[open] summary::before{transform:rotate(90deg)}
+details .body{padding:0 24px 20px}
+
+table.ref{width:100%;border-collapse:collapse;font-size:12px;margin-bottom:8px}
+table.ref th{background:#f3f5f8;padding:8px 10px;text-align:left;font-weight:700;
+  color:var(--tx2);font-size:11.5px;border-bottom:1px solid var(--line);position:sticky;top:0}
+table.ref td{padding:7px 10px;border-bottom:1px solid var(--line2);color:var(--tx2);vertical-align:top}
+table.ref tr:hover td{background:#fafbfd}
+table.ref td.d{font-weight:700;white-space:nowrap}
+.sw{display:inline-block;width:10px;height:10px;border-radius:3px;margin-right:5px}
+
+.note{background:#fbfcfd;border:1px solid var(--line);border-radius:12px;
+  padding:16px 22px;margin-top:14px;font-size:12.5px;color:var(--tx2);line-height:1.85}
+.note b{color:var(--tx)}
+.note .disc{background:#fff4f4;border-left:3px solid #e17055;padding:11px 14px;
+  border-radius:0 8px 8px 0;margin-top:12px;color:#8a3a28}
+.acts{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px}
+.btn{border:1px solid var(--line);background:#fff;border-radius:8px;padding:9px 18px;
+  cursor:pointer;font-size:13px;font-family:inherit;color:var(--tx2)}
+.btn:hover{border-color:#c3cad6;background:#fafbfc}
+.btn.pri{background:var(--tx);border-color:var(--tx);color:#fff}
+.btn.pri:hover{background:#000}
+
+@media print{
+  body{background:#fff}
+  .sec,.acts,.note,details{display:none}
+  .res{border:none;padding:0}
+  .res .hint{display:none}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header>
+  <h1>大一学生工作自评与匹配问卷</h1>
+  <div class="sub">四部分：测评结果（霍兰德 / MBTI / 未来方向）+ 10 道自评题。约 5 分钟，边选边出结果。</div>
+  <div class="tags">
+    <span class="tag">权重：自评 50% · 霍兰德 30% · MBTI 20% · 未来方向作加成</span>
+    <span class="tag">六方向：统筹管理 / 内容创意 / 对外沟通 / 专业学术 / 活动执行 / 服务支持</span>
+    <span class="tag r">霍兰德与 MBTI 为参考维度，不作结论</span>
+    <span class="tag w">政策类信息须核验本校文件</span>
+  </div>
+</header>
+
+<!-- ============ 基本信息 ============ -->
+<div class="sec">
+  <h2><span class="no">0</span>基本信息</h2>
+  <div class="desc">填写后便于我们归档你的结果（不会对外公开）</div>
+  <div class="field">
+    <div class="flab">姓名 <span class="req must">必填</span></div>
+    <input class="infoin" id="inName" type="text" placeholder="请输入姓名" />
+  </div>
+  <div class="field">
+    <div class="flab">学校 <span class="req must">必填</span></div>
+    <input class="infoin" id="inSchool" type="text" placeholder="请输入学校名称" />
+  </div>
+  <div class="field">
+    <div class="flab">专业 <span class="req must">必填</span></div>
+    <input class="infoin" id="inMajor" type="text" placeholder="请输入所学专业" />
+  </div>
+</div>
+
+<!-- ============ 第一部分 ============ -->
+<div class="sec">
+  <h2><span class="no">1</span>你的测评结果与未来方向</h2>
+  <div class="desc">没有测过可以跳过，权重会自动分配给已填的部分</div>
+
+  <div class="field">
+    <div class="flab">霍兰德职业兴趣 · 主导型 <span class="req">选填</span></div>
+    <div class="chips" id="holA"></div>
+  </div>
+  <div class="field">
+    <div class="flab">霍兰德职业兴趣 · 辅助型① <span class="req">选填 · 与主导型不同</span></div>
+    <div class="chips" id="holB"></div>
+  </div>
+  <div class="field">
+    <div class="flab">霍兰德职业兴趣 · 辅助型② <span class="req">选填 · 与主导、辅助①不同</span></div>
+    <div class="chips" id="holC"></div>
+  </div>
+  <div class="holnow" id="holNow">
+    选完霍兰德三型后，这里会实时显示你的代码、类型与组合建议
+  </div>
+  <div class="field">
+    <div class="flab">MBTI 性格类型 <span class="req">选填 · 四个维度各选一个</span></div>
+    <div class="grp" id="mbti"></div>
+    <div style="margin-top:10px;font-size:12.5px;color:var(--tx2)">
+      当前类型：<b id="mbtiNow" style="font-size:15px;color:var(--tx)">未选</b>
+    </div>
+  </div>
+  <div class="field">
+    <div class="flab">你毕业后更可能走哪条路？ <span class="req must">必选 · 决定加成方向</span></div>
+    <div class="chips" id="goal"></div>
+  </div>
+</div>
+
+<!-- ============ 第二部分 ============ -->
+<div class="sec">
+  <h2><span class="no">2</span>自评 10 题</h2>
+  <div class="desc">这部分权重最高（50%），因为它问的是你真实的行为偏好，而不是对自己的想象</div>
+  <div id="qs"></div>
+</div>
+
+<!-- ============ 结果 ============ -->
+<div class="res" id="res">
+  <h2>匹配结果</h2>
+  <div class="hint" id="hint">先选未来方向并答完 10 题，出完整结果</div>
+  <div id="bars"></div>
+
+  <div id="detail"></div>
+  <div class="picks" id="picks"></div>
+  <div id="tips"></div>
+
+  <div class="submitbar" id="submitbar" style="display:none;margin-top:18px">
+    <button class="btn pri" id="submitBtn">✓ 提交保存我的结果</button>
+    <span class="submsg" id="submitMsg"></span>
+  </div>
+
+  <div class="acts">
+    <button class="btn pri" onclick="window.print()">打印 / 存 PDF</button>
+    <button class="btn" id="btnCopy">复制结果摘要</button>
+    <button class="btn" onclick="resetAll()">重填</button>
+  </div>
+</div>
+
+<!-- ============ 对照表 ============ -->
+<details>
+  <summary>霍兰德 6 型 → 六个方向权重表</summary>
+  <div class="body"><div id="refHol"></div></div>
+</details>
+
+<details>
+  <summary>霍兰德 30 种组合（主导 + 辅助）完整对照　·　三型时组合解读取「主导 + 第一辅助」</summary>
+  <div class="body"><div id="refPair"></div></div>
+</details>
+
+<details>
+  <summary>MBTI 16 型完整对照</summary>
+  <div class="body"><div id="refMb"></div></div>
+</details>
+
+<div class="note">
+  <b>三条提醒</b><br>
+  1. 结果是「当前更值得去试的方向」，不是「你适合什么」。真正的判断要靠进去做一学期。<br>
+  2. 学生工作每周总投入不超过 8 小时，超过必然影响 GPA。大一绩点崩了后面补不回来。<br>
+  3. 第一学期末做一次退出评估：投入超预算、成绩下滑、或连续两周在做纯粹重复劳动，就体面退出。<br>
+  <div class="disc">
+  <b>关于霍兰德与 MBTI 的使用边界：</b>这两项在本问卷中合计占 50% 权重，但它们是<b>偏好与自我认知的参考</b>，不是能力证据，也不能作为职业结论。
+  霍兰德测的是兴趣倾向，MBTI 的重测稳定性与预测效度在学术界存在争议。
+  因此本结果只用于「缩小尝试范围」，不能用来判定一个人适合或不适合某类工作。
+  真正可靠的判断来自真实经历：做过的事、拿到的结果、别人的反馈。
+  </div>
+  <b>必须核验</b>：本校综合测评的学生工作加分范围、本省选调「主要学生干部」认定口径、各组织纳新时间。
+</div>
+
+</div>
+
+<script>
+/* ================= 方向定义 ================= */
+const DIM = [
+ {k:'M', n:'统筹管理', c:'var(--M)'},
+ {k:'C', n:'内容创意', c:'var(--C)'},
+ {k:'S', n:'对外沟通', c:'var(--S)'},
+ {k:'A', n:'专业学术', c:'var(--A)'},
+ {k:'E', n:'活动执行', c:'var(--E)'},
+ {k:'V', n:'服务支持', c:'var(--V)'}
+];
+const DK = DIM.map(d=>d.k);
+const DNM = {}; DIM.forEach(d=>DNM[d.k]=d.n);
+
+/* ================= 霍兰德 ================= */
+const HOL = {
+ R:{n:'现实型', d:'动手实操、器械工具、偏好具体任务', w:{M:1,C:0,S:0,A:2,E:3,V:1}},
+ I:{n:'研究型', d:'观察分析、抽象思考、求真', w:{M:1,C:1,S:0,A:3,E:0,V:0}},
+ A:{n:'艺术型', d:'创造表达、非传统、重审美', w:{M:0,C:3,S:1,A:1,E:2,V:0}},
+ S:{n:'社会型', d:'助人、教导、沟通、支持', w:{M:1,C:0,S:2,A:0,E:1,V:3}},
+ E:{n:'企业型', d:'影响说服、领导、目标导向', w:{M:3,C:0,S:3,A:0,E:1,V:0}},
+ C:{n:'常规型', d:'秩序、规则、数据、流程', w:{M:2,C:0,S:0,A:1,E:0,V:3}}
+};
+const HOLMAX = 3 + 3*0.5 + 3*0.5;   // 主导 1.0 + 辅助① 0.5 + 辅助② 0.5 = 2.0，单型最大权重 3 → 6.0
+
+const HOLPAIR = {
+ RI:['爱动手也爱琢磨原理，适合技术类落地','实验室助理 · 学术科技类社团'],
+ RA:['动手又有审美，适合带工艺感的产出','宣传部（摄影/后期）· 兴趣社团'],
+ RS:['能干实事也愿意带人，适合一线执行','体育部 · 实践部 · 志愿公益类'],
+ RE:['动手又能张罗，适合现场统筹','体育部 · 文艺部（舞台执行）'],
+ RC:['严谨的实操者，适合标准化流程','办公室 · 纪检部'],
+ IR:['研究型又肯下实操，不空想','实验室助理 · 学术科技类社团'],
+ IA:['爱钻研也有表达欲，适合深度内容','记者团 · 宣传部（深度稿件）'],
+ IS:['善思考也愿意帮人，能做知识服务','学习部 · 朋辈心理辅导员'],
+ IE:['能做研究也能带项目，有转化意识','学术科技类社团负责人 · 创新创业类'],
+ IC:['严谨的研究者，适合数据与台账','组织部 · 学习部'],
+ AR:['创意能落地，不只是想','宣传部（设计/视频）· 文艺部'],
+ AI:['有想法也有深度，内容有厚度','记者团 · 学术社团的内容岗'],
+ AS:['用创意服务他人，表达有温度','宣传委员 · 权益部（内容表达）'],
+ AE:['有创意又能说服人，提案能力强','外联部 · 宣传部负责人'],
+ AC:['创意且守序，能持续稳定产出','宣传部（排版/流程）'],
+ SR:['愿意帮人也肯干活，不挑活','实践部 · 志愿公益类'],
+ SI:['善倾听也爱思考，适合一对一支持','朋辈心理辅导员 · 学习部'],
+ SA:['有温度的表达者，适合做面向人的内容','宣传委员 · 广播台'],
+ SE:['能凝聚人也能推动事，天然的班委料','班长 · 团支书 · 外联部'],
+ SC:['耐心且细致的服务者，靠得住','权益部 · 生活心理委员 · 图书馆助理'],
+ ER:['有冲劲也接地气，能谈也能干','外联部 · 实践部'],
+ EI:['能说也能想，谈判前有准备','外联部 · 创新创业类'],
+ EA:['有感染力也有审美，适合台前','文艺部 · 宣传部负责人'],
+ ES:['能带人也能照顾人，团队黏合剂','班长 · 团支书'],
+ EC:['有目标感也讲方法，推进有序','办公室 · 组织部'],
+ CR:['按流程把事做实，不出错','办公室 · 纪检部'],
+ CI:['严谨且爱分析，适合数据与规则','组织部 · 学习部'],
+ CA:['守序中带点审美，规范地做好看的东西','宣传部（排版）· 权益部'],
+ CS:['规范地服务他人，稳定可靠','权益部 · 图书馆助理'],
+ CE:['讲流程也能推进，适合行政统筹','办公室 · 组织部']
+};
+
+/* ================= MBTI ================= */
+const MBTI_P = {
+ 'E/I':{E:{n:'外向',w:{M:1,C:0,S:2,A:0,E:1,V:0}}, I:{n:'内向',w:{M:1,C:2,S:0,A:2,E:0,V:1}}},
+ 'S/N':{S:{n:'实感',w:{M:1,C:0,S:0,A:1,E:2,V:2}}, N:{n:'直觉',w:{M:2,C:2,S:1,A:2,E:1,V:0}}},
+ 'T/F':{T:{n:'思考',w:{M:2,C:0,S:1,A:2,E:0,V:0}}, F:{n:'情感',w:{M:1,C:1,S:2,A:0,E:1,V:2}}},
+ 'J/P':{J:{n:'判断',w:{M:2,C:0,S:0,A:1,E:1,V:2}}, P:{n:'知觉',w:{M:0,C:2,S:1,A:1,E:2,V:0}}}
+};
+const MBTIMAX = {}; DK.forEach(k=>{
+  MBTIMAX[k] = Object.values(MBTI_P).reduce((s,p)=>
+    s + Math.max(p[Object.keys(p)[0]].w[k], p[Object.keys(p)[1]].w[k]), 0);
+});
+const MBTI16 = {
+ INTJ:{n:'战略型', d:'独立、长线规划、看整体结构', m:['M','A']},
+ INTP:{n:'逻辑型', d:'爱拆解问题、追根究底、不愛重复', m:['A','C']},
+ ENTJ:{n:'指挥型', d:'天生组织者、目标驱动、敢拍板', m:['M','S']},
+ ENTP:{n:'探索型', d:'点子多、能说、喜欢挑战与辩论', m:['S','C']},
+ INFJ:{n:'理想型', d:'洞察人心、重价值、做事有内在秩序', m:['V','C']},
+ INFP:{n:'共情型', d:'重意义、表达细腻、厌恶功利', m:['C','V']},
+ ENFJ:{n:'感召型', d:'天生凝聚团队、善于激发他人', m:['M','V']},
+ ENFP:{n:'热忱型', d:'感染力強、点子多、三分钟热度需警惕', m:['C','S']},
+ ISTJ:{n:'可靠型', d:'严谨、守流程、说到做到', m:['V','M']},
+ ISFJ:{n:'守护型', d:'细致、默默付出、记得别人的事', m:['V','C']},
+ ESTJ:{n:'执行型', d:'讲效率、重规则、能把事推到底', m:['M','V']},
+ ESFJ:{n:'亲和型', d:'善照顾、重和谐、人脉维护者', m:['V','E']},
+ ISTP:{n:'实操型', d:'冷静、动手强、临场应变好', m:['E','A']},
+ ISFP:{n:'审美型', d:'温和、重质感、不喜欢冲突', m:['C','E']},
+ ESTP:{n:'行动型', d:'临场、敢冲、边做边调整', m:['E','S']},
+ ESFP:{n:'活跃型', d:'感染力强、愛现场、气氛担当', m:['E','C']}
+};
+
+/* ================= 未来方向 ================= */
+const GOAL = {
+ pg:{n:'保研', add:{M:4,C:2,S:0,A:12,E:0,V:0},
+   tip:'保研加分主要看竞赛与论文，学生工作本身的加分通常很有限。首选学术科技类社团，其次争取班长/团支书（部分院校综测认职务）。务必查清本校推免办法里的加分清单，只做清单内的事。'},
+ ky:{n:'考研', add:{M:3,C:0,S:0,A:12,E:0,V:2},
+   tip:'考研方向要控制投入：每周不超过 5 小时，选能长期积累又不耗时的。学术科技类社团 > 学生工作。大三下启动复习后，学生工作应当果断减量或退出。'},
+ gk:{n:'考公', add:{M:12,C:2,S:0,A:0,E:0,V:6},
+   tip:'考公看重的是"主要学生干部"认定，不是经历数量。优先争取班长 / 团支书 / 部长及以上，普通干事在多数岗位条件里不算。同时核验本省对任职时长的要求。'},
+ xd:{n:'选调', add:{M:14,C:2,S:0,A:0,E:0,V:6},
+   tip:'选调是四條路里对学生工作依赖最高的一条，且通常限应届当年报考，错过即失去。必须满足三个硬条件：党员（含预备）+ 学生干部 + 校级荣誉 —— 这三条现在就要开始布局，大二下再动就来不及。'},
+ jy:{n:'就业（企业）', add:{M:0,C:8,S:10,A:0,E:4,V:0},
+   tip:'企业看的是可迁移能力与可展示成果。优先选能产出作品的（宣传部/记者团）或能练商务感的（外联部/就业部）。每一段经历都要留下可量化的成果，大三写简历时才有东西写。'},
+ un:{n:'还没想好', add:{M:0,C:0,S:0,A:0,E:0,V:0},
+   tip:'没想好是常态，不用急着定。这种情况建议选"能力可迁移、退出成本低"的岗位：宣传类（能攒作品）、班委（职务认定通用）。先做一学期，用真实体验反推方向。'}
+};
+
+/* ================= 自评题 ================= */
+const Q = [
+ {no:1, q:'一周有 5 小时自由时间，你最想花在？',
+  o:['组织一次班级或社团活动','做一张海报 / 剪一段视频 / 写一篇推文','联系外面的商家或企业谈合作','泡图书馆查专业资料'],
+  s:{'A':['E',2],'B':['C',2],'C':['S',2],'D':['A',2]}},
+ {no:2, q:'你最想通过这份工作补上什么？',
+  o:['统筹能力与担当','一项能拿出手的硬技能','胆量和嘴皮子','专业深度与竞赛机会'],
+  s:{'A':['M',2],'B':['C',2],'C':['S',2],'D':['A',2]}},
+ {no:3, q:'活动突发出状况（下雨、嘉宾放鸽子），你的第一反应？',
+  o:['马上调整方案、重新分工','直接上手把事情顶上','赶紧打电话找人协调','先查有没有预案可循'],
+  s:{'A':['M',2],'B':['E',2],'C':['S',2],'D':['A',2]}},
+ {no:4, q:'你更享受哪种成就感？',
+  o:['一群人按我的安排把事办成了','做出来的成品被人夸','谈成了一件别人谈不成的事','把一堆繁杂事务理顺了'],
+  s:{'A':['E',2],'B':['C',2],'C':['S',2],'D':['V',2]}},
+ {no:5, q:'你目前的短板更接近？',
+  o:['不敢担责、怕得罪人','做事没条理、容易漏细节','不敢跟陌生人开口','专业学得一般，没拿得出手的成果'],
+  s:{'A':['M',2],'B':['V',2],'C':['S',2],'D':['A',2]}},
+ {no:6, q:'你每周能稳定投入多少小时？', flag:'约束题 · 不计分',
+  o:['8 小时以上','5–8 小时','3–5 小时','3 小时以下'], s:null},
+ {no:7, q:'对重复性事务（值班、填表、搬物资）你的态度？',
+  o:['能接受，当作熟悉流程的机会','不太能接受，更想产出内容','不太能接受，更想对外打交道','能接受，但更想做专业相关的事'],
+  s:{'A':['V',2],'B':['C',2],'C':['S',2],'D':['A',2]}},
+ {no:8, q:'以下哪件事你更愿意做？',
+  o:['处理同学的琐碎诉求','做宣传物料','去谈赞助','组织一场活动'],
+  s:{'A':['V',2],'B':['C',2],'C':['S',2],'D':['E',2]}},
+ {no:9, q:'你更在意这份工作带来什么？',
+  o:['职务认定（利于考公 / 选调）','作品集（利于求职）','完整参与过大型活动','奖项和加分（利于保研）'],
+  s:{'A':['M',2],'B':['C',2],'C':['E',2],'D':['A',2]}},
+ {no:10, q:'你更向往成为？',
+  o:['班长 / 部门负责人','宣传 / 内容骨干','外联 / 公关骨干','踏实可靠的执行骨干'],
+  s:{'A':['M',2],'B':['C',2],'C':['S',2],'D':['V',2]}}
+];
+
+const PORTRAIT = {
+ M:{main:'班长 / 团支书', alt:'办公室 · 组织部',
+    gain:'全局统筹、冲突处理、向上沟通、抗压',
+    door:'开学第 1–2 周班委竞选（成本最低、见效最快）'},
+ C:{main:'宣传部 / 新媒体中心', alt:'广播台记者团 · 宣传委员',
+    gain:'硬技能 + 可直接用于求职的作品集',
+    door:'宣传部 / 记者团纳新（需准备一件自己的作品）'},
+ S:{main:'外联部 / 公关部', alt:'就业与职业发展部 · 招生宣传志愿者',
+    gain:'商务谈判、市场嗅觉、被拒绝的承受力',
+    door:'外联部纳新（成长最快，也最容易劝退）'},
+ A:{main:'学术科技类社团', alt:'学习部 · 图书馆 / 实验室助理',
+    gain:'专业能力、竞赛队友与奖项（保研加分的真实来源）',
+    door:'社团纳新、实验室助管招新（主动联系专业教师）'},
+ E:{main:'文艺部 / 体育部 / 实践部', alt:'国旗班礼仪队 · 创新创业类社团',
+    gain:'大型活动全流程、舞台与赛事统筹、临场应变',
+    door:'文艺部 / 体育部纳新（有特长更好，没特长也能从执行做起）'},
+ V:{main:'权益 / 生活服务部 · 生活心理委员', alt:'图书馆助理 · 朋辈心理辅导员',
+    gain:'用户视角、投诉处理、危机识别、流程意识',
+    door:'权益部纳新、班委竞选、学校职能部门的助管岗位'}
+};
+/* 各方向自评满分：按题目动态计算。
+   手填分母一旦与实际可得分不符，自评环节就会溢出 100%（如「专业学术」实际可拿 12 分，
+   分母写 10 时会算出 120%）。这里改为从题目反推，永不会出现分母漂移。 */
+const FULL = {}; DK.forEach(k=>FULL[k]=0);
+Q.forEach(t=>{ if(!t.s) return;
+  DK.forEach(k=>{ let m=0;
+    Object.values(t.s).forEach(([d,v])=>{ if(d===k) m=Math.max(m,v); });
+    FULL[k]+=m; });
+});
+DIM.forEach(d=>d.full=FULL[d.k]);
+
+const BUDGET = {
+ A:'预算充足：可选 2 个（1 个主力 + 1 个兴趣）',
+ B:'预算中等：1 个主力 + 1 个轻量（建议班委或兴趣社团）',
+ C:'预算偏紧：只选 1 个主力，其余时间留给学业',
+ D:'预算很紧：本学期只做班委，或暂缓到下学期再加'
+};
+
+const f1 = v => (Math.round(v*10)/10).toFixed(1);
+
+/* ================= 状态 ================= */
+let ANS = {}, HOL_A = null, HOL_B = null, HOL_C = null, MBTI = {}, GOAL_K = null;
+
+function render(){
+  // 霍兰德
+  const mk = (box, slot)=>{
+    document.getElementById(box).innerHTML = Object.entries(HOL).map(([k,v])=>
+      `<div class="chip" data-h="${k}" onclick="pickHol('${k}',${slot})">${k} ${v.n}<small>${v.d.slice(0,8)}</small></div>`
+    ).join('');
+  };
+  mk('holA', 0); mk('holB', 1); mk('holC', 2);
+
+  // MBTI
+  document.getElementById('mbti').innerHTML = Object.entries(MBTI_P).map(([pair,opt])=>`
+    <div class="gcol">
+      <div class="gt">${pair}</div>
+      <div class="gpair">
+        ${Object.entries(opt).map(([L,v])=>
+          `<div class="chip" data-p="${pair}" data-l="${L}" onclick="pickMb('${pair}','${L}')">${L} ${v.n}</div>`
+        ).join('')}
+      </div>
+    </div>`).join('');
+
+  // 目标
+  document.getElementById('goal').innerHTML = Object.entries(GOAL).map(([k,v])=>
+    `<div class="chip" data-g="${k}" onclick="pickGoal('${k}')">${v.n}</div>`).join('');
+
+  // 自评题
+  document.getElementById('qs').innerHTML = Q.map(t=>`
+    <div class="qc">
+      <div class="qhead">
+        <span class="qno">Q${t.no}</span><span class="qtitle">${t.q}</span>
+        ${t.flag?`<span class="qflag">${t.flag}</span>`:''}
+      </div>
+      <div class="opts">
+        ${t.o.map((v,i)=>{const L='ABCD'[i];
+          return `<div class="opt" data-no="${t.no}" data-l="${L}" onclick="pick(${t.no},'${L}')">
+            <span class="k">${L}</span><span>${v}</span></div>`}).join('')}
+      </div>
+    </div>`).join('');
+}
+
+function pick(no,L){
+  ANS[no] = (ANS[no]===L)?undefined:L;
+  document.querySelectorAll(`.opt[data-no="${no}"]`).forEach(el=>
+    el.classList.toggle('on', el.dataset.l===ANS[no]));
+  compute();
+}
+function pickHol(k, slot){
+  // 点击自己所在槽位 = 取消；三型互斥，最新点击优先，清除其他槽位中的同一类型
+  if(slot===0){ HOL_A = (HOL_A===k)?null:k; if(HOL_B===k) HOL_B=null; if(HOL_C===k) HOL_C=null; }
+  else if(slot===1){ HOL_B = (HOL_B===k)?null:k; if(HOL_A===k) HOL_A=null; if(HOL_C===k) HOL_C=null; }
+  else { HOL_C = (HOL_C===k)?null:k; if(HOL_A===k) HOL_A=null; if(HOL_B===k) HOL_B=null; }
+  sync(); compute();
+}
+function pickMb(pair,L){
+  MBTI[pair] = (MBTI[pair]===L)?undefined:L;
+  sync(); compute();
+}
+function pickGoal(k){ GOAL_K = (GOAL_K===k)?null:k; sync(); compute(); }
+
+function sync(){
+  document.querySelectorAll('#holA .chip').forEach(el=>el.classList.toggle('on', el.dataset.h===HOL_A));
+  document.querySelectorAll('#holB .chip').forEach(el=>el.classList.toggle('on', el.dataset.h===HOL_B));
+  document.querySelectorAll('#holC .chip').forEach(el=>el.classList.toggle('on', el.dataset.h===HOL_C));
+  document.querySelectorAll('#mbti .chip').forEach(el=>el.classList.toggle('on', MBTI[el.dataset.p]===el.dataset.l));
+  document.querySelectorAll('#goal .chip').forEach(el=>el.classList.toggle('on', el.dataset.g===GOAL_K));
+  const code = ['E/I','S/N','T/F','J/P'].map(p=>MBTI[p]||'·').join('');
+  const full = code.indexOf('·')<0;
+  document.getElementById('mbtiNow').innerHTML = full
+    ? `${code}　${MBTI16[code].n}　${MBTI16[code].d}` : (code==='····'?'未选':code+'（未选全）');
+
+  // 霍兰德即时反馈（与 MBTI 一样，选完即显示结果与分辨）
+  const hn = document.getElementById('holNow');
+  if(!HOL_A){
+    hn.className = 'holnow empty';
+    hn.innerHTML = '霍兰德三型尚未选择。选完「主导型」后，这里会实时显示你的代码、类型特征与组合建议。';
+    return;
+  }
+  // 组合解读取「主导 + 第一辅助」（辅助①优先，空则取辅助②）
+  const aux = HOL_B || HOL_C || '';
+  const pr = aux ? HOLPAIR[HOL_A + aux] : null;
+  const codeStr = HOL_A + (HOL_B?'·'+HOL_B:'') + (HOL_C?'·'+HOL_C:'');
+  let html = `<span class="code">${codeStr}</span>`
+    + `<span class="desc">主导型 <b>${HOL[HOL_A].n}</b>（${HOL[HOL_A].d}）</span>`;
+  if(HOL_B) html += `<div class="desc">辅助① ${HOL[HOL_B].n}（${HOL[HOL_B].d}）</div>`;
+  if(HOL_C) html += `<div class="desc">辅助② ${HOL[HOL_C].n}（${HOL[HOL_C].d}）</div>`;
+  if(pr) html += `<div class="cmb">组合建议：<b>${pr[0]}</b>　→　<span class="desc">${pr[1]}</span></div>`;
+  hn.className = 'holnow';
+  hn.innerHTML = html;
+}
+function resetAll(){ ANS={}; HOL_A=HOL_B=HOL_C=null; MBTI={}; GOAL_K=null; render(); sync(); compute(); }
+
+/* ================= 计算 ================= */
+function compute(){
+  // 1. 自评
+  const s1={}; DK.forEach(k=>s1[k]=0);
+  Q.forEach(t=>{const a=ANS[t.no]; if(a&&t.s){const[d,v]=t.s[a]; s1[d]+=v;}});
+  const p1={}; DIM.forEach(d=>p1[d.k]=s1[d.k]/d.full);
+
+  // 2. 霍兰德
+  const s2={}; DK.forEach(k=>s2[k]=0);
+  if(HOL_A) DK.forEach(k=>s2[k]+=HOL[HOL_A].w[k]*1.0);
+  if(HOL_B) DK.forEach(k=>s2[k]+=HOL[HOL_B].w[k]*0.5);
+  if(HOL_C) DK.forEach(k=>s2[k]+=HOL[HOL_C].w[k]*0.5);
+  const p2={}; DK.forEach(k=>p2[k]=s2[k]/HOLMAX);
+
+  // 3. MBTI
+  const s3={}; DK.forEach(k=>s3[k]=0);
+  Object.entries(MBTI).forEach(([p,L])=>{ if(L) DK.forEach(k=>s3[k]+=MBTI_P[p][L].w[k]); });
+  const p3={}; DK.forEach(k=>p3[k]=s3[k]/MBTIMAX[k]);
+
+  // 权重（缺项自动重分配）
+  const hasH = !!HOL_A, hasM = Object.keys(MBTI).filter(k=>MBTI[k]).length===4;
+  let w1=50,w2=0,w3=0;
+  if(hasH&&hasM){w1=50;w2=30;w3=20;}
+  else if(hasH){w1=50/80*100;w2=30/80*100;}
+  else if(hasM){w1=50/70*100;w3=20/70*100;}
+  else {w1=100;}
+
+  // 4. 方向加成 + 综合
+  // 加成按「未占满的空间」施加：eff = add × (1 − 综合原始分/100)
+  // 这样综合分恒等于 加权分 + 有效加成，且数学上永不超过 100，不会撞顶后失去区分度
+  const blend={}; const add={}; const tot={};
+  DK.forEach(k=>{
+    blend[k] = (p1[k]*w1 + p2[k]*w2 + p3[k]*w3)/100*100;
+    add[k]   = GOAL_K ? Math.round((GOAL[GOAL_K].add[k]||0) * (1 - blend[k]/100) * 10)/10 : 0;
+    tot[k]   = blend[k] + add[k];
+  });
+
+  // 条形
+  document.getElementById('bars').innerHTML = DIM.map(d=>`
+    <div class="bar">
+      <span class="nm" style="color:${d.c}">${d.n}</span>
+      <span class="track"><span class="fill" style="width:${tot[d.k]}%;background:${d.c}"></span></span>
+      <span class="pc">${Math.round(tot[d.k])}</span>
+    </div>`).join('');
+
+  const nAns = Object.values(ANS).filter(v=>v).length;
+  const ready = nAns===Q.length && GOAL_K;
+  const hint = document.getElementById('hint');
+  if(!ready){
+    hint.textContent = (!GOAL_K? '请先选「毕业后的方向」' : `已答 ${nAns} / ${Q.length} 题`)
+      + '　·　' + (nAns===Q.length ? '' : '答完 10 题后出完整结果');
+    document.getElementById('detail').innerHTML='';
+    document.getElementById('picks').innerHTML =
+      `<div style="color:var(--tx3);font-size:13px;padding:6px 0">选好方向并答完 10 题后显示岗位建议</div>`;
+    document.getElementById('tips').innerHTML='';
+    return;
+  }
+  hint.textContent = `已答完 · 权重 自评 ${Math.round(w1)}%　霍兰德 ${Math.round(w2)}%　MBTI ${Math.round(w3)}%　方向加成已计入`;
+
+  // 分解表
+  document.getElementById('detail').innerHTML = `
+    <div class="subttl">分数构成</div>
+    <table class="brk"><thead><tr><th>方向</th><th>自评 ${Math.round(w1)}%</th>
+      <th>霍兰德 ${Math.round(w2)}%</th><th>MBTI ${Math.round(w3)}%</th>
+      <th>加权分</th><th>方向加成</th><th>综合</th></tr></thead><tbody>
+    ${DIM.map(d=>`<tr>
+      <td><span class="sw" style="background:${d.c}"></span>${d.n}</td>
+      <td>${Math.round(p1[d.k]*100)}</td><td>${Math.round(p2[d.k]*100)}</td>
+      <td>${Math.round(p3[d.k]*100)}</td>
+      <td>${f1(blend[d.k])}</td>
+      <td>${add[d.k]>0?'+'+f1(add[d.k]):'—'}</td>
+      <td class="tot" style="color:${d.c}">${f1(tot[d.k])}</td></tr>`).join('')}
+    </tbody></table>
+    <div class="brknote">方向加成按「未占满的空间」施加：有效加成 = 名义加成 ×（1 − 加权分 ÷ 100）。
+    这样三项都指向同一方向时不会撞到 100 分而失去区分度；加权分越高的方向，加成越接近 0。</div>`;
+
+  const rank = DIM.slice().sort((a,b)=>(tot[b.k]-tot[a.k]) || (blend[b.k]-blend[a.k]) || (p1[b.k]-p1[a.k]));
+  const t1=rank[0], t2=rank[1], p1o=PORTRAIT[t1.k], p2o=PORTRAIT[t2.k];
+  document.getElementById('picks').innerHTML = `
+    <div class="subttl">你的建议</div>
+    <div class="pick"><span class="lbl">第一方向（主力）</span>
+      <span class="val" style="color:${t1.c}">${t1.n}　${f1(tot[t1.k])} 分
+      <small>把主要时间投在这里</small></span></div>
+    <div class="pick"><span class="lbl">第二方向（备选）</span>
+      <span class="val" style="color:${t2.c}">${t2.n}　${f1(tot[t2.k])} 分
+      <small>时间允许时作为兴趣位，或主力受挫时的备选</small></span></div>
+    <div class="pick"><span class="lbl">建议岗位</span>
+      <span class="val">${p1o.main}<small>备选：${p1o.alt}</small></span></div>
+    <div class="pick"><span class="lbl">能锤炼什么</span><span class="val">${p1o.gain}</span></div>
+    <div class="pick"><span class="lbl">典型入口</span><span class="val">${p1o.door}</span></div>
+    <div class="pick"><span class="lbl">第二方向建议</span>
+      <span class="val">${p2o.main}<small>备选：${p2o.alt}</small></span></div>`;
+
+  let tips = '';
+  if(BUDGET[ANS[6]]) tips += `<div class="tipbox time"><b>时间预算：</b>${BUDGET[ANS[6]]}</div>`;
+  tips += `<div class="tipbox path"><b>方向提示（${GOAL[GOAL_K].n}）：</b>${GOAL[GOAL_K].tip}</div>`;
+  if(HOL_A){
+    // 组合解读只看「主导 + 第一辅助」（辅助①优先，未填则取辅助②）；第三型只进分数，不单独生成组合文案
+    const aux = HOL_B || HOL_C || '';
+    const pr = aux ? HOLPAIR[HOL_A + aux] : null;
+    const parts = [`${HOL[HOL_A].n}（${HOL[HOL_A].d}）`];
+    if(HOL_B) parts.push('　+　'+HOL[HOL_B].n+'（'+HOL[HOL_B].d+'）');
+    if(HOL_C) parts.push('　+　'+HOL[HOL_C].n+'（'+HOL[HOL_C].d+'）');
+    tips += `<div class="tipbox hol"><b>霍兰德 ${HOL_A}${HOL_B?'·'+HOL_B:''}${HOL_C?'·'+HOL_C:''}：</b>` + parts.join('')
+      + (pr?`<br>组合解读：${pr[0]}　→　<b>${pr[1]}</b>`:'') + `</div>`;
+  }
+  const mcode = ['E/I','S/N','T/F','J/P'].map(p=>MBTI[p]||'·').join('');
+  if(mcode.indexOf('·')<0 && MBTI16[mcode]){
+    const m = MBTI16[mcode];
+    tips += `<div class="tipbox mb"><b>MBTI ${mcode}（${m.n}）：</b>${m.d}`
+      + `　→　更匹配 <b>${m.m.map(k=>DNM[k]).join(' / ')}</b></div>`;
+  }
+  tips += `<div class="tipbox warn"><b>别忘了核实：</b>本校综测的学生工作加分范围、`
+    + `本省选调「主要学生干部」认定口径、各组织纳新截止时间。这三项各校差异极大。</div>`;
+  document.getElementById('tips').innerHTML = tips;
+
+  // —— 记录提交数据，供「提交保存」使用 ——
+  window._submitData = {
+    name: document.getElementById('inName').value.trim(),
+    school: document.getElementById('inSchool').value.trim(),
+    major: document.getElementById('inMajor').value.trim(),
+    hol: { A: HOL_A || '', B: HOL_B || '', C: HOL_C || '' },
+    mbti: { 'E/I': MBTI['E/I'] || '', 'S/N': MBTI['S/N'] || '', 'T/F': MBTI['T/F'] || '', 'J/P': MBTI['J/P'] || '' },
+    goal: GOAL[GOAL_K].n,
+    ans: Q.map(q => ANS[q.no] || ''),
+    scores: Object.fromEntries(DK.map(k => [k, Math.round(tot[k]*10)/10])),
+    top: {
+      t1: t1.k, t1Name: t1.n, t1Score: Math.round(tot[t1.k]*10)/10,
+      t2: t2.k, t2Name: t2.n, t2Score: Math.round(tot[t2.k]*10)/10,
+      job: p1o.main, jobAlt: p1o.alt
+    },
+    total: nAns
+  };
+  // 显示提交栏
+  const sb = document.getElementById('submitbar');
+  if(sb){
+    sb.style.display = 'block';
+    document.getElementById('submitMsg').textContent = '填写完成，可提交保存到老师后台。';
+  }
+}
+
+/* ================= 对照表 ================= */
+function buildRef(){
+  document.getElementById('refHol').innerHTML = `
+    <table class="ref"><thead><tr><th style="width:110px">类型</th><th>核心特征</th>
+    ${DIM.map(d=>`<th style="width:62px;text-align:center">${d.n}</th>`).join('')}
+    <th>最匹配方向</th></tr></thead><tbody>
+    ${Object.entries(HOL).map(([k,v])=>{
+      const best = DK.slice().sort((a,b)=>v.w[b]-v.w[a])[0];
+      return `<tr><td class="d" style="color:var(--tx)">${k} ${v.n}</td><td>${v.d}</td>
+        ${DK.map(d=>`<td style="text-align:center;${v.w[d]>=2?'font-weight:700;color:'+DIM.find(x=>x.k===d).c:''}">${v.w[d]||'·'}</td>`).join('')}
+        <td style="color:${DIM.find(x=>x.k===best).c};font-weight:700">${DNM[best]}</td></tr>`;
+    }).join('')}</tbody></table>`;
+
+  document.getElementById('refPair').innerHTML = `
+    <table class="ref"><thead><tr><th style="width:96px">组合</th><th>解读</th>
+    <th style="width:280px">建议岗位</th></tr></thead><tbody>
+    ${Object.entries(HOLPAIR).map(([k,v])=>
+      `<tr><td class="d" style="color:var(--tx)">${k[0]} + ${k[1]}</td><td>${v[0]}</td><td>${v[1]}</td></tr>`
+    ).join('')}</tbody></table>`;
+
+  document.getElementById('refMb').innerHTML = `
+    <table class="ref"><thead><tr><th style="width:96px">类型</th><th>特征</th>
+    <th style="width:230px">更匹配方向</th><th style="width:230px">建议岗位</th></tr></thead><tbody>
+    ${Object.entries(MBTI16).map(([k,v])=>
+      `<tr><td class="d" style="color:var(--tx)">${k}<br><span style="font-weight:400;font-size:11px;color:var(--tx3)">${v.n}</span></td>
+       <td>${v.d}</td>
+       <td>${v.m.map(x=>`<span class="sw" style="background:${DIM.find(d=>d.k===x).c}"></span>${DNM[x]}`).join('<br>')}</td>
+       <td>${v.m.map(x=>PORTRAIT[x].main).join('　/　')}</td></tr>`
+    ).join('')}</tbody></table>`;
+}
+
+document.getElementById('btnCopy').onclick = function(){
+  const info = [['姓名', 'inName'], ['学校', 'inSchool'], ['专业', 'inMajor']]
+    .map(([lab, id]) => `${lab}：${document.getElementById(id).value.trim() || '—'}`).join('　');
+  const txt = info + '\n\n' + document.getElementById('picks').innerText + '\n'
+    + document.getElementById('tips').innerText;
+  navigator.clipboard.writeText(txt).then(()=>{
+    this.textContent='已复制'; setTimeout(()=>this.textContent='复制结果摘要',1600);
+  }).catch(()=>{ this.textContent='复制失败，请手动选择'; });
+};
+
+/* ================= 提交保存 ================= */
+const btnSubmit = document.getElementById('submitBtn');
+if(btnSubmit){
+  btnSubmit.onclick = async function(){
+    const data = window._submitData;
+    const msg = document.getElementById('submitMsg');
+    if(!data || !data.name){
+      msg.textContent = '请先填写姓名并完成问卷，再提交保存。';
+      return;
+    }
+    // 校验基本信息是否填写
+    const missing = [['姓名','inName'],['学校','inSchool'],['专业','inMajor']]
+      .filter(([,id]) => !document.getElementById(id).value.trim())
+      .map(x => x[0]);
+    if(missing.length){
+      msg.textContent = '请补全：' + missing.join('、') + '（老师需要这些信息归档）。';
+      return;
+    }
+    // 校验答题完整性
+    const unanswered = Q.map(q => q.no).filter(no => !(ANS[no] || '').trim());
+    if(unanswered.length){
+      msg.textContent = '还有 ' + unanswered.length + ' 道题未作答，请完成后提交。';
+      return;
+    }
+    btnSubmit.disabled = true;
+    btnSubmit.textContent = '提交中…';
+    try{
+      const resp = await fetch('/api/submit', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data)
+      });
+      const json = await resp.json();
+      if(json.ok){
+        msg.textContent = '✓ 提交成功！结果已保存到老师后台。感谢你的填写。';
+        msg.style.color = '#2e7d32';
+        btnSubmit.textContent = '已提交';
+        // 记录一个已提交标记，避免重复提交
+        btnSubmit.dataset.done = '1';
+        if(window.scrollTo) window.scrollTo({top: document.body.scrollHeight, behavior:'smooth'});
+      } else {
+        msg.textContent = '提交失败：' + (json.msg || '请重试');
+        msg.style.color = '#c62828';
+        btnSubmit.disabled = false;
+        btnSubmit.textContent = '提交保存';
+      }
+    }catch(e){
+      msg.textContent = '网络错误，无法连接服务器，请稍后重试。';
+      msg.style.color = '#c62828';
+      btnSubmit.disabled = false;
+      btnSubmit.textContent = '提交保存';
+    }
+  };
+}
+
+render(); sync(); compute(); buildRef();
+</script>
+</body>
+</html>

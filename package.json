@@ -1,0 +1,12 @@
+{
+  "name": "student-work-quiz",
+  "version": "1.0.0",
+  "description": "学生工作自评与匹配问卷（在线提交 + 管理导出）",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "express": "^4.22.2"
+  }
+}
